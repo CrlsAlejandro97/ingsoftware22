@@ -21,7 +21,6 @@ jobs:
         - name: Install and Test
           run: |
                 npm i
-                npm run build 
                 npm run test
         - name: SonarCloud Scan
           uses: SonarSource/sonarcloud-github-action@master
