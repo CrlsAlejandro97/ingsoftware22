@@ -22,7 +22,7 @@ jobs:
           run: |
                 npm i
                 npm run test
-                
+
   CD:
     runs-on: ubuntu-18.04
     needs: CI
@@ -37,3 +37,15 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.USER_DOCKER }}/app:latest
+
+  toDeploy:
+    name: to Production
+    needs: CD
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: CDNievas/heroku-action@v1.0 # This is the action
+        with:
+          heroku_email: "alejandroocampo64@yahoo.com.ar"
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "entrega-ingsoft"
