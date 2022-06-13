@@ -1,56 +1,24 @@
-name: Ing. de Software (CI/CD)
-
-on:
+name: Ing. de Software (CI-CD)
+on: 
   push:
-    branches: [ "main" ]
-  label:
-    types: [created]
+    branches:
+      - main
 jobs:
   CI:
-    runs-on: ubuntu-18.04
-    container:
-      image: node:16.15.0
-      credentials:
-       username: ${{ secrets.USER_DOCKER }}
-       password: ${{ secrets.PASS_DOCKER }}
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '16.15.0'
-      - name: Install y Test  
-        run: |
-              npm i --no-audit --no-fund --no-optional
-              npm run test
-  #CD:
-   # runs-on: ubuntu-18.04
-    #needs: CI
-
-    #steps:
-     # - uses: actions/checkout@v1
-      #- name: Docker login
-      #  run: docker login -u ${{ secrets.USER_DOCKER }} -p ${{ secrets.PASS_DOCKER }}
-
-      #- name: Build and push
-      #- uses: docker/build-push-action@v3
-       # with:
-        #  push: true
-         # tags: ${{ secrets.USER_DOCKER }}/myingsoftw:latest
- 
-  #toDeploy:
-   # name: to Production
-    #needs: CD
-    #runs-on: ubuntu-18.04
-    #steps:
-     # - name: Checkout
-      #  uses: actions/checkout@v2
-      #- name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
-       # id: heroku
-        #uses: jctaveras/heroku-deploy@v1.0.0  # use the latest version of the action
-        #with:
-         # email: "alejandroocampo64@yahoo.com.ar"
-          #api_key: ${{secrets.HEROKU_API_KEY}}
-          #app_name: "myingsoftw"
-          #tags: latest
+      runs-on: ubuntu-20.04
+      container:
+        image: node:16.15.0
+        credentials:
+          username: ${{ secrets.USER_DOCKER }}
+          password: ${{ secrets.PASS_DOCKER }}
+      steps:
+        - uses: actions/checkout@v1
+          with:
+            fetch-depth: 0
+        - uses: actions/setup-node@v1
+          with:
+            node-version: '16.15.0'
+        - name: Install and Test
+          run: |
+                npm i
+                npm run test
