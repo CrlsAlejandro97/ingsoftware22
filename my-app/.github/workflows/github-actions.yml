@@ -1,0 +1,26 @@
+name: Ing. de Software
+
+on:
+  push:
+    branches: [ "main" ]
+  label:
+    types: [created]
+jobs:
+  CI:
+    runs-on: ubuntu-20.04
+    container:
+      image: node:16.15.0
+      credentials:
+       username: ${{ secrets.USER_DOCKER }}
+       password: ${{ secrets.PASS_DOCKER }}
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.15.0'
+      - name: Install y Test  
+        run: |
+              npm i --no-audit --no-fund --no-optional
+              npm run test
